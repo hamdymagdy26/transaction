@@ -24,6 +24,15 @@
 				<div class="col-md-6 col-lg-4">
 					<div class="login-wrap p-0">
 		      	<h3 class="mb-4 text-center">Don't Have Account?</h3>
+				  @if ($errors->any())
+					<div class="alert alert-danger">
+						<ul>
+							@foreach ($errors->all() as $error)
+								<li>{{ $error }}</li>
+							@endforeach
+						</ul>
+					</div>
+				@endif
 		      	<form action="{{route('front.register')}}" method="post" class="signin-form">
                 @csrf
 		      		<div class="form-group">

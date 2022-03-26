@@ -16,9 +16,10 @@ class TransactionRequest extends FormRequest
     {
         return [
             'holder_name' => 'required|string',
-            'card_number' => 'required|integer|min:16|max:16',
-            'expiry_date' => 'required|date_format:Y-m',
-            'to' => 'required|exists:users,id'
+            'card_number' => 'required|integer',
+            'expiry_date' => 'required|date_format:Y-m-d',
+            'to' => 'required|exists:users,id',
+            'amount' => 'required|numeric'
         ];
     }
 }

@@ -24,6 +24,11 @@ class HomeService implements HomeServiceInterface
 		return $this->homeRepositoryInterface->frontLogin($data);
 	}
 
+	public function checkout()
+	{
+		return $this->homeRepositoryInterface->checkout();
+	}
+
 	public function frontRegister($data)
 	{
 		return $this->homeRepositoryInterface->frontRegister($data);

@@ -8,5 +8,8 @@ interface HomeRepositoryInterface
 
 	public function frontLogin($data);
 
+	public function checkout();
+
 	public function frontRegister($data);
+
 }

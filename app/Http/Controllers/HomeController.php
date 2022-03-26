@@ -76,7 +76,8 @@ class HomeController extends Controller
      */
     public function checkout()
     {
-        return view('checkout');
+        $users = $this->homeServiceInterface->checkout();
+        return view('checkout')->with("users", $users);
     }
 
     public function storeTransaction(TransactionRequest $request)
