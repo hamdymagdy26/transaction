@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Services\Transactions\TransactionServiceInterface;
+
+class TransactionController extends Controller
+{
+	private $userServiceInterface;
+
+    public function __construct(TransactionServiceInterface $userServiceInterface) 
+    {
+    	$this->userServiceInterface = $userServiceInterface;
+    }
+
+    public function index()
+    {
+    	$transactions = $this->userServiceInterface->index();
+    	return view('transactions.view')
+    		->with("transactions", $transactions);
+    }
+}
