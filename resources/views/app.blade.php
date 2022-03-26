@@ -50,9 +50,13 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 
-                <a class="dropdown-item" href="{{ route('logout') }}" class="btn btn-default btn-flat">
-                    <i class="fa fa-lock"></i>Sign Out
-                </a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+
+                <x-jet-dropdown-link href="{{ route('logout') }}" class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5" onclick="event.preventDefault(); this.closest('form').submit();">
+                    Sign Out
+                </x-jet-dropdown-link>
+            </form>
             </div>
         </li>
     </ul>
@@ -66,12 +70,12 @@
 </div>
 <footer class="app-footer">
     <div>
-        <a href="https://www.egyptgotravel.com/" target="_blanck">Egypt Go Travels</a>
+        <a href="#" target="_blanck">Transaction</a>
         <span>&copy; {{date('Y')}}.</span>
     </div>
     <div class="ml-auto">
         <span>Powered by</span>
-        <a href="#">Semantic Code</a>
+        <a href="#">Global Bank</a>
     </div>
 </footer>
 </body>

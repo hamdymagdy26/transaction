@@ -2,10 +2,12 @@
    
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthRequest;
 use App\Http\Requests\TransactionRequest;
 use App\Services\Home\HomeServiceInterface;
 use Illuminate\Http\Request;
-   
+use Illuminate\Support\Facades\Auth;
+
 class HomeController extends Controller
 {
     private $homeServiceInterface;
@@ -13,37 +15,73 @@ class HomeController extends Controller
     public function __construct(HomeServiceInterface $homeServiceInterface) 
     {
     	$this->homeServiceInterface = $homeServiceInterface;
-        $this->middleware('auth');
-    }
-  
-    /**
-     * Return client interface.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function home()
-    {
-        return view('home');
-    }
-  
-    /**
-     * Return admin interface.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function adminHome()
-    {
-        return view('app');
     }
 
-    public function createTransaction()
+    public function logout()
     {
-        return view('createTransaction');
+        Auth::logout();
+        return redirect('loginUser');
+    }
+  
+    /**
+     * Return client login interface.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function loginUser()
+    {
+        return view('front');
+    }
+
+    /**
+     * Login to end user interface.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function frontRegister(AuthRequest $request)
+    {
+        $user = $this->homeServiceInterface->frontRegister($request->validated());
+    	return redirect('loginUser');
+    }
+
+    /**
+     * Login to end user interface.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function frontLogin(AuthRequest $request)
+    {
+        $user = $this->homeServiceInterface->frontLogin($request->validated());
+        if (! $user) {
+            toastr()->error('Wrong E-mail Or Password.');
+			return redirect('loginUser');
+		}
+    	return redirect('checkout');
+    }
+
+    /**
+     * Return client register interface.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function register()
+    {
+        return view('register');
+    }
+
+    /**
+     * Return checkout page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function checkout()
+    {
+        return view('checkout');
     }
 
     public function storeTransaction(TransactionRequest $request)
     {
-    	$this->homeServiceInterface->storeTransaction($request->validated());
+    	$user = $this->homeServiceInterface->storeTransaction($request->validated());
         toastr()->success('Transaction Done Successfully');
     	return redirect()->back();
     }

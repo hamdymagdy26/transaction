@@ -18,4 +18,14 @@ class HomeService implements HomeServiceInterface
 		$transactions = $this->homeRepositoryInterface->storeTransaction($data);
 		return $transactions;
 	}
+
+	public function frontLogin($data)
+	{
+		return $this->homeRepositoryInterface->frontLogin($data);
+	}
+
+	public function frontRegister($data)
+	{
+		return $this->homeRepositoryInterface->frontRegister($data);
+	}
 }

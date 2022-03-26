@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
@@ -20,12 +21,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::post('logout', [HomeController::class, 'logout'])->name('logout');
 
+// Admin Routes
 Route::group(['middleware' => ['is_admin']], function () {
-    Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
+    Route::get('admin/home', [AdminController::class, 'adminHome'])->name('admin.home');
+    // List Users
     Route::get('admin/home/users', [UserController::class, 'index'])->name('users.index');
-});    
-Route::get('home', [HomeController::class, 'home'])->name('home');
+    // List Transactions
+    Route::get('admin/home/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+});  
+
+// End User Routes
+Route::get('loginUser', [HomeController::class, 'loginUser'])->name('loginUser');
+Route::get('register', [HomeController::class, 'register'])->name('register');
+Route::post('front/login', [HomeController::class, 'frontLogin'])->name('front.login');
+Route::post('front/register', [HomeController::class, 'frontRegister'])->name('front.register');
+Route::get('checkout', [HomeController::class, 'checkout'])->name('checkout');
+
