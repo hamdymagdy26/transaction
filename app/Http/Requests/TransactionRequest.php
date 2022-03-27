@@ -22,4 +22,11 @@ class TransactionRequest extends FormRequest
             'amount' => 'required|numeric'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'to.required' => 'You Must Select The Transaction Receiver'
+        ];
+    }
 }

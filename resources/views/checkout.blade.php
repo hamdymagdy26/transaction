@@ -33,7 +33,7 @@
 					<div class="login-wrap p-0">
 		      	        <h3 class="mb-4 text-center">Kindly Provide Information!</h3>
                         @if ($errors->any())
-							<div class="alert alert-danger">
+							<div class="alert alert-danger" style="font-size:13px !important">
 								<ul>
 									@foreach ($errors->all() as $error)
 										<li>{{ $error }}</li>
@@ -65,7 +65,7 @@
                             </div>
 
                             <div class="form-group">
-                                <input id="password-field" type="date" name="expiry_date" class="form-control" required>
+                                <input id="password-field" type="date" name="expiry_date" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control" required>
                             </div>
 
                             <div class="form-group">
