@@ -29,7 +29,7 @@
 				</div>
 			</div>
 			<div class="row justify-content-center">
-				<div class="col-md-6 col-lg-4">
+				<div class="col-md-6 col-lg-6">
 					<div class="login-wrap p-0">
 		      	        <h3 class="mb-4 text-center">Kindly Provide Information!</h3>
                         @if ($errors->any())
@@ -43,34 +43,56 @@
 						@endif
                         <form action="{{route('storeTransaction')}}" method="post" class="signin-form">
                         @csrf
-                            <div class="form-group">
-                                <select class="form-control" name="to">
-                                    <option disabled selected>-- Select User --</option>
-                                    @foreach($users as $user)
-                                    <option style="color:black" value="{{$user->id}}">{{$user->name}}</option>
-                                    @endforeach
-                                </select>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <select class="form-control" name="to">
+                                        <option disabled selected>-- Select User --</option>
+                                        @foreach($users as $user)
+                                        <option style="color:black" value="{{$user->id}}">{{$user->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="number" name="card_number" class="form-control" placeholder="Card Number" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="number" name="amount" class="form-control" placeholder="Amount" required>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <input type="number" name="card_number" class="form-control" placeholder="Card Number" required>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input id="password-field" type="string" name="holder_name" class="form-control" placeholder="Card Holder Name" required>
+                                </div>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input id="password-field" type="date" name="expiry_date" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control" required>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <button type="submit" class="form-control btn btn-primary submit px-3">Pay Now</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <a href="{{route('myTransaction')}}" style="padding-top: 11px; background: #9bd3a0 !important; border: 1px solid #9bd3a0 !important;"
+                                 class="form-control btn btn-primary submit px-3">My Transaction</a>
+                            </div>
+                        </div>
 
-                            <div class="form-group">
-                                <input type="number" name="amount" class="form-control" placeholder="Amount" required>
-                            </div>
-
-                            <div class="form-group">
-                                <input id="password-field" type="string" name="holder_name" class="form-control" placeholder="Card Holder Name" required>
-                            </div>
-
-                            <div class="form-group">
-                                <input id="password-field" type="date" name="expiry_date" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control" required>
-                            </div>
-
-                            <div class="form-group">
-                                <button type="submit" class="form-control btn btn-primary submit px-3">Pay Now</button>
-                            </div>
+                        </div>
                         </form>
 		            </div>
 				</div>

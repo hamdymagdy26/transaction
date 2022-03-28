@@ -8,6 +8,8 @@ interface HomeServiceInterface
 
 	public function checkout();
 
+	public function myTransaction();
+
 	public function frontLogin($data);
 
 	public function frontRegister($data);

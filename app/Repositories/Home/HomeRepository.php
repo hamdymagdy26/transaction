@@ -57,6 +57,11 @@ class HomeRepository implements HomeRepositoryInterface
 		return $this->userModel->all()->except(Auth::id());
 	}
 
+	public function myTransaction()
+	{
+		return $this->model->where('from', Auth::id())->get();
+	}
+
 	public function frontLogin($data)
 	{   
 		return auth()->attempt(['email' => $data['email'], 'password' => $data['password']]);

@@ -80,11 +80,26 @@ class HomeController extends Controller
         return view('checkout')->with("users", $users);
     }
 
+    /**
+     * Store user transaction.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function storeTransaction(TransactionRequest $request)
     {
     	$user = $this->homeServiceInterface->storeTransaction($request->validated());
         toastr()->success('Transaction Done Successfully');
     	return redirect()->back();
     }
-    
+
+    /**
+     * Return user transactions page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function myTransaction()
+    {
+        $transactions = $this->homeServiceInterface->myTransaction();
+        return view('my-transactions')->with("transactions", $transactions);
+    }
 }

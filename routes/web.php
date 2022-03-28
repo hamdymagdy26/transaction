@@ -39,4 +39,5 @@ Route::post('front/login', [HomeController::class, 'frontLogin'])->name('front.l
 Route::post('front/register', [HomeController::class, 'frontRegister'])->name('front.register');
 Route::get('checkout', [HomeController::class, 'checkout'])->name('checkout');
 Route::post('storeTransaction', [HomeController::class, 'storeTransaction'])->name('storeTransaction');
+Route::get('myTransaction', [HomeController::class, 'myTransaction'])->name('myTransaction');
 

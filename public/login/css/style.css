@@ -8213,6 +8213,17 @@ h1, h2, h3, h4, h5,
 .form-group {
   position: relative; }
 
+th {
+    text-align: center !important;
+}
+
+tr {
+    text-align: center !important;
+}
+
+td {
+    text-align: center !important;
+}
 .field-icon {
   position: absolute;
   top: 50%;

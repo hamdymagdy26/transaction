@@ -10,6 +10,8 @@ interface HomeRepositoryInterface
 
 	public function checkout();
 
+	public function myTransaction();
+
 	public function frontRegister($data);
 
 }
