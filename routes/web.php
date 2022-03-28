@@ -34,8 +34,11 @@ Route::group(['middleware' => ['is_admin']], function () {
     Route::get('admin/home/users', [UserController::class, 'index'])->name('users.index');
     // List Transactions
     Route::get('admin/home/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::get('transactions/export/', [TransactionController::class, 'export'])->name('transactions.export');
     // Logout
     Route::post('logoutAdmin', [AdminController::class, 'logout'])->name('logoutAdmin');
+    // Logs
+    Route::get('logs/', [HomeController::class, 'logs'])->name('logs');
 });  
 
 // End User Routes
@@ -51,5 +54,4 @@ Route::group(['middleware' => ['is_user']], function () {
     Route::get('checkout', [HomeController::class, 'checkout'])->name('checkout');
     Route::post('storeTransaction', [HomeController::class, 'storeTransaction'])->name('storeTransaction');
     Route::get('myTransaction', [HomeController::class, 'myTransaction'])->name('myTransaction');
-
 });

@@ -102,4 +102,15 @@ class HomeController extends Controller
         $transactions = $this->homeServiceInterface->myTransaction();
         return view('my-transactions')->with("transactions", $transactions);
     }
+
+    /**
+     * Return system logs.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function logs()
+    {
+        $logs = $this->homeServiceInterface->logs();
+        return view('logs.index')->with("logs", $logs);
+    }
 }

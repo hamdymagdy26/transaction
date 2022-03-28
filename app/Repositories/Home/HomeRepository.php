@@ -1,6 +1,8 @@
 <?php 
 
 namespace App\Repositories\Home;
+
+use App\Models\Log;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Repositories\Home\HomeRepositoryInterface;
@@ -12,14 +14,17 @@ class HomeRepository implements HomeRepositoryInterface
 {
 	private $model;
 	private $userModel;
+	private $logModel;
 
 	function __construct(
         Transaction $model,
-		User $userModel
+		User $userModel,
+		Log $logModel
     )
 	{
 		$this->model = $model;
 		$this->userModel = $userModel;
+		$this->logModel = $logModel;
 	}
 
 	public function storeTransaction($data)
@@ -37,15 +42,18 @@ class HomeRepository implements HomeRepositoryInterface
 			throw ValidationException::withMessages(['amount' => 'You Have Exceeded Your Transaction Limit Of 200 L.E.']);
 		}
 
-		$insertTransaction = $this->model->create([
-            'from' => Auth::id(),
-            'to' => $data['to'],
-            'amount' => $data['amount']
-        ]);
+		$transactionData = [
+			'from' => Auth::id(),
+			'to' => $data['to'],
+			'amount' => $data['amount']
+		];
+
+		$insertTransaction = $this->model->create($transactionData);
 		
 		if ($insertTransaction) {
 			$this->userModel->where('id', Auth::id())->update(['amount' => $user->amount - $data['amount']]);
 			$this->userModel->where('id', $data['to'])->update(['amount' => $receiver->amount + $data['amount']]);
+			$this->logModel->create($transactionData);
 		} 
 		if (! $insertTransaction) {
 			$this->model->where('id', $insertTransaction->id)->update(['status' => 0]);
@@ -60,6 +68,11 @@ class HomeRepository implements HomeRepositoryInterface
 	public function myTransaction()
 	{
 		return $this->model->where('from', Auth::id())->get();
+	}
+
+	public function logs()
+	{
+		return $this->logModel->orderBy('id', 'desc')->get();
 	}
 
 	public function frontLogin($data)

@@ -1,0 +1,8 @@
+.log {
+    padding: 10px !important;
+    text-align: center !important;
+    border-radius: 5px !important;
+    margin: auto;
+    margin-top: 10px;
+    width: 50%;
+}

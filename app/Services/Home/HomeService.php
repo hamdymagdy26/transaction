@@ -29,6 +29,11 @@ class HomeService implements HomeServiceInterface
 		return $this->homeRepositoryInterface->checkout();
 	}
 
+	public function logs()
+	{
+		return $this->homeRepositoryInterface->logs();
+	}
+
 	public function myTransaction()
 	{
 		return $this->homeRepositoryInterface->myTransaction();

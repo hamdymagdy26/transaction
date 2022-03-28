@@ -10,6 +10,8 @@ interface HomeServiceInterface
 
 	public function myTransaction();
 
+	public function logs();
+
 	public function frontLogin($data);
 
 	public function frontRegister($data);

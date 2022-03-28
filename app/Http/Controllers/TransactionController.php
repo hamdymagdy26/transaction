@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TransactionExport;
+use App\Reports\TransactionReport;
 use App\Services\Transactions\TransactionServiceInterface;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TransactionController extends Controller
 {
@@ -18,5 +21,10 @@ class TransactionController extends Controller
     	$transactions = $this->userServiceInterface->index();
     	return view('transactions.view')
     		->with("transactions", $transactions);
+    }
+
+    public function export()
+    {
+        return Excel::download(new TransactionExport, 'transactions.xlsx');
     }
 }

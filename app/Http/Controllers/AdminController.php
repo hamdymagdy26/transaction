@@ -30,7 +30,7 @@ class AdminController extends Controller
      */
     public function adminHome()
     {
-        return view('app');
+        return view('charts');
     }
 
     public function backLogin(AuthRequest $request)
