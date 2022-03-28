@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\TransactionExport;
+use App\Exports\TransactionsExport;
 use App\Reports\TransactionReport;
 use App\Services\Transactions\TransactionServiceInterface;
 use Maatwebsite\Excel\Facades\Excel;

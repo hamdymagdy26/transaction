@@ -2,17 +2,30 @@
 
 namespace App\Exports;
 
-use App\Invoice;
 use App\Models\Transaction;
-use Illuminate\Contracts\View\View;
-use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\FromCollection;
 
-class TransactionExport implements FromView
+class TransactionExport implements FromCollection
 {
-    public function view(): View
+    public function collection()
     {
-        return view('transactions.transactionsExcel', [
-            'transactions' => Transaction::all()
-        ]);
+        $transactions = Transaction::all();
+        $array = [];
+        $i = 0;
+        foreach ($transactions as $key => $transaction) {
+            $array[$key]['from'] = $transaction->sentFrom->name;
+            $array[$key]['to'] = $transaction->receivedTo->name;
+            $array[$key]['amount'] = $transaction->amount;
+            $array[$key]['date'] = \Carbon\Carbon::parse($transaction->created_at)->format("Y-m-d h:i A");
+            if ($transaction->status == 1) {
+                $array[$key]['status'] = 'Successful';
+            } else {
+                $array[$key]['status'] = 'Fail';
+            }
+            $i++;
+        }
+        $array[$i+1] = ['from', 'to', 'amount', 'date', 'status'];
+        $collection = array_reverse($array);
+        return collect($collection);
     }
 }
