@@ -2,12 +2,16 @@
 
 namespace App\Providers;
 
+use App\Repositories\Admin\AdminRepository;
+use App\Repositories\Admin\AdminRepositoryInterface;
 use App\Repositories\Home\HomeRepositoryInterface;
 use App\Repositories\Home\HomeRepository;
 use App\Repositories\Transactions\TransactionRepository;
 use App\Repositories\Transactions\TransactionRepositoryInterface;
 use App\Repositories\Users\UserRepository;
 use App\Repositories\Users\UserRepositoryInterface;
+use App\Services\Admin\AdminService;
+use App\Services\Admin\AdminServiceInterface;
 use App\Services\Home\HomeService;
 use App\Services\Home\HomeServiceInterface;
 use App\Services\Transactions\TransactionService;
@@ -46,5 +50,10 @@ class AppServiceProvider extends ServiceProvider
          // Home Binding
          $this->app->bind(HomeServiceInterface::class, HomeService::class);
          $this->app->bind(HomeRepositoryInterface::class, HomeRepository::class);
+
+        // Admin Binding
+        $this->app->bind(AdminServiceInterface::class, AdminService::class);
+        $this->app->bind(AdminRepositoryInterface::class, AdminRepository::class);
+         
     }
 }

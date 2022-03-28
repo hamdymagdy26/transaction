@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class IsUser
 {
@@ -17,13 +18,16 @@ class IsUser
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check()) {
-            if (auth()->user()->admin == 0) {
+        if (! Auth::check()) {
+            return redirect('loginUser');    
+        } else {
+            if (Auth::check() && auth()->user()->admin == 0) {
                 return $next($request);
+            } else {
+                Auth::logout();
+                return redirect('loginUser');
             }
         }
-        return redirect('login')->with('error',"You don't have admin access.");
-
     }
 
 }

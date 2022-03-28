@@ -50,10 +50,10 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 
-            <form method="POST" action="{{ route('logout') }}">
+            <form method="POST" action="{{ route('logoutAdmin') }}">
                 @csrf
 
-                <x-jet-dropdown-link href="{{ route('logout') }}" class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5" onclick="event.preventDefault(); this.closest('form').submit();">
+                <x-jet-dropdown-link href="{{ route('logoutAdmin') }}" class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5" onclick="event.preventDefault(); this.closest('form').submit();">
                     Sign Out
                 </x-jet-dropdown-link>
             </form>

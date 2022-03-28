@@ -2,6 +2,7 @@
    
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthRequest;
 use App\Http\Requests\TransactionRequest;
 use App\Services\Admin\AdminServiceInterface;
 use Illuminate\Http\Request;
@@ -9,9 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    public function __construct() 
+    private $adminServiceInterface;
+
+    public function __construct(AdminServiceInterface $adminServiceInterface) 
     {
-        $this->middleware('auth');
+    	$this->adminServiceInterface = $adminServiceInterface;
     }
 
     public function logout()
@@ -28,5 +31,15 @@ class AdminController extends Controller
     public function adminHome()
     {
         return view('app');
+    }
+
+    public function backLogin(AuthRequest $request)
+    {
+        $user = $this->adminServiceInterface->backLogin($request->validated());
+        if (! $user) {
+            toastr()->error('Wrong E-mail Or Password.');
+			return redirect('login');
+		}
+    	return redirect('admin/home');
     }
 }

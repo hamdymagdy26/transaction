@@ -30,6 +30,11 @@ class AuthRequest extends FormRequest
                     'password' => 'required|string|confirmed|min:6',
                     'name' => 'required|string'
                 ];        
+            } elseif ($action === 'backLogin') {
+                return [
+                    'email' => 'required|email|exists:users,email',
+                    'password' => 'required|string'
+                ];        
             }
         }
     }
