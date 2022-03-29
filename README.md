@@ -38,6 +38,8 @@ In the previous endpoint :
 - You can export report of all the transactions
 - You can check all system logs and transactions made by users.
 
+##  Kindly Note 
+The DB diagram included in DB folder in the main root of the project.
 ## Hope Everything Is Clear.
 And kindly contact me for any issue with installing the application.
 
