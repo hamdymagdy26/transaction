@@ -14,7 +14,7 @@ class TransactionSeeder extends Seeder
         $users= collect(User::all()->modelKeys());
         $data = [];
 
-        for ($i = 0; $i < 100000; $i++) {
+        for ($i = 0; $i < 500000; $i++) {
             $data[] = [
                 'from' => $users->random(),
                 'to' => $users->random(),
