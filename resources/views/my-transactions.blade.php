@@ -70,7 +70,7 @@
                         </tbody>
                     </table>
                     <div style="text-align: center; margin-bottom:10px">
-                        {{$transactions->render()}}
+                    {{ $transactions->links('vendor.pagination.simple-bootstrap-4') }}
                     </div>
                     <a href="{{route('checkout')}}" style="padding-top: 11px;" class="form-control btn btn-primary submit px-3">Checkout Page</a>
 				</div>
