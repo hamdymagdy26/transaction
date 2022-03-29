@@ -20,8 +20,8 @@ class TransactionSeeder extends Seeder
                 'to' => $users->random(),
                 'amount' => rand(1,199),
                 'status' => rand(0,1),
-                'created_at' => now()->toDateTimeString(),
-                'updated_at' => now()->toDateTimeString(),
+                'created_at' => now()->subHour(3)->toDateTimeString(),
+                'updated_at' => now()->subHour(3)->toDateTimeString(),
             ];
         }
 
