@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+ini_set('max_execution_time', 230);
 use App\Models\Transaction;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
@@ -9,7 +10,7 @@ class TransactionExport implements FromCollection
 {
     public function collection()
     {
-        $transactions = Transaction::all();
+        $transactions = Transaction::limit(1000)->get();
         $array = [];
         $i = 0;
         foreach ($transactions as $key => $transaction) {

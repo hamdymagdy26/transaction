@@ -24,4 +24,5 @@
         @endforeach
     </tbody>
 </table>
+{{$transactions->render()}}
 @endsection
