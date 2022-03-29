@@ -18,16 +18,16 @@ class IsUser
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! Auth::check()) {
-            return redirect('loginUser');    
-        } else {
-            if (Auth::check() && auth()->user()->admin == 0) {
-                return $next($request);
-            } else {
-                Auth::logout();
-                return redirect('loginUser');
-            }
+        if (! auth()->user()) {
+            return redirect()->route('loginUser');
+        } elseif (auth()->user()->admin != 0) {
+            Auth::guard()->logout();
+            $request->session()->flush();
+            $request->session()->regenerate();
+
+            return redirect()->route('loginUser')->withErrors('Wrong Email Or Password');;
         }
+        return $next($request);
     }
 
 }

@@ -25,14 +25,18 @@
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-5" style="margin-bottom: 1rem !important;">
-					<h2 class="heading-section">Checkout Page</h2>
+					<h2 class="heading-section">Your Transaction!</h2>
+                    <form method="POST" action="{{ route('logoutFront') }}">
+                        @csrf
+
+                        <x-jet-dropdown-link href="{{ route('logoutFront') }}" class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5" onclick="event.preventDefault(); this.closest('form').submit();">
+                            Sign Out
+                        </x-jet-dropdown-link>
+                    </form>
 				</div>
 			</div>
 			<div class="row justify-content-center">
 				<div class="col-md-6 col-lg-4">
-					<div class="login-wrap p-0">
-		      	        <h3 class="mb-4 text-center">Your Transaction!</h3>
-		            </div>
                     <table class="table table-dark">
                         <thead>
                             <tr>
@@ -42,21 +46,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($transactions as $transaction)
+                            @if ($transactions->count() > 0)
+                                @foreach($transactions as $transaction)
+                                <tr>
+                                    <td>{{$transaction->receivedTo->name}}</td>
+                                    <td>{{$transaction->amount}}</td>
+                                    <td>
+                                        @if ($transaction->status == 1)
+                                        Successful
+                                        @else
+                                        Failed
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                            @else
                             <tr>
-                                <td>{{$transaction->receivedTo->name}}</td>
-                                <td>{{$transaction->amount}}</td>
-                                <td>
-                                    @if ($transaction->status == 1)
-                                    Successful
-                                    @else
-                                    Failed
-                                    @endif
+                                <td class="center" colspan="3">
+                                    No Transactions!
                                 </td>
                             </tr>
-                            @endforeach
+                            @endif
                         </tbody>
                     </table>
+                    <div style="text-align: center; margin-bottom:10px">
+                        {{$transactions->render()}}
+                    </div>
                     <a href="{{route('checkout')}}" style="padding-top: 11px;" class="form-control btn btn-primary submit px-3">Checkout Page</a>
 				</div>
 			</div>

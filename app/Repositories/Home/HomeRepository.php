@@ -67,7 +67,7 @@ class HomeRepository implements HomeRepositoryInterface
 
 	public function myTransaction()
 	{
-		return $this->model->where('from', Auth::id())->get();
+		return $this->model->where('from', Auth::id())->paginate(5);
 	}
 
 	public function logs()

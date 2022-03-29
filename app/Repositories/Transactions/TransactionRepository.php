@@ -15,6 +15,6 @@ class TransactionRepository implements TransactionRepositoryInterface
 
 	public function index()
 	{
-		return $this->model->all();
+		return $this->model->orderBy('id', 'desc')->get();
 	}
 }

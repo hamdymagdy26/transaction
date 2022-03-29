@@ -56,7 +56,7 @@ class HomeController extends Controller
             toastr()->error('Wrong E-mail Or Password.');
 			return redirect('loginUser');
 		}
-    	return redirect('checkout');
+    	return redirect()->route('checkout');
     }
 
     /**

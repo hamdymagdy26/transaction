@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
@@ -15,6 +16,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        // For real data used in testing
         DB::table('users')->insert([
             [
                 'name' => 'Sameh Ashraf',
@@ -41,5 +43,15 @@ class UserSeeder extends Seeder
                 'admin' => 1
             ]
         ]);
+
+        // For seeding date
+        for ($i=0; $i < 30; $i++) { 
+            DB::table('users')->insert([
+                'name' => Str::random(10),
+                'password' => bcrypt(Str::random(10).rand(1,1000)),
+                'email' => Str::random(10).rand(1,1000).'@gmail.com',
+                'admin' => rand(0,1)
+            ]);
+        }
     }
 }

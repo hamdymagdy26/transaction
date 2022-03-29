@@ -3,29 +3,32 @@
 namespace Database\Seeders;
 
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Faker\Generator as Faker;
 
 class TransactionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(Faker $faker)
     {
-        DB::table('transactions')->insert([
-            [
-                'from' => 1,
-                'to' => 2,
-                'amount' => 20
-            ],
-            [
-                'from' => 2,
-                'to' => 1,
-                'amount' => 30
-            ]
-        ]);
+        $users= collect(User::all()->modelKeys());
+        $data = [];
+
+        for ($i = 0; $i < 100000; $i++) {
+            $data[] = [
+                'from' => $users->random(),
+                'to' => $users->random(),
+                'amount' => rand(1,199),
+                'status' => rand(0,1),
+                'created_at' => now()->toDateTimeString(),
+                'updated_at' => now()->toDateTimeString(),
+            ];
+        }
+
+        $chunks = array_chunk($data, 10000);
+
+        foreach ($chunks as $chunk) {
+            Transaction::insert($chunk);
+        }
     }
 }

@@ -15,6 +15,7 @@ class AdminController extends Controller
     public function __construct(AdminServiceInterface $adminServiceInterface) 
     {
     	$this->adminServiceInterface = $adminServiceInterface;
+        $this->middleware('auth');
     }
 
     public function logout()

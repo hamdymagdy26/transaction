@@ -22,12 +22,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Login Backend
-Route::post('back/login', [AdminController::class, 'backLogin'])->name('back.login');
-
 // Admin Routes
-Route::group(['middleware' => ['is_admin']], function () {
-
+Route::middleware(['is_admin'])->group(function () {
     // Admin Panel
     Route::get('admin/home', [AdminController::class, 'adminHome'])->name('admin.home');
     // List Users
@@ -48,7 +44,7 @@ Route::get('register', [HomeController::class, 'register'])->name('register');
 Route::post('front/login', [HomeController::class, 'frontLogin'])->name('front.login');
 Route::post('front/register', [HomeController::class, 'frontRegister'])->name('front.register');
 
-Route::group(['middleware' => ['is_user']], function () {
+Route::middleware(['is_user'])->group(function () {
     // Logout
     Route::post('logoutFront', [HomeController::class, 'logout'])->name('logoutFront');
     Route::get('checkout', [HomeController::class, 'checkout'])->name('checkout');

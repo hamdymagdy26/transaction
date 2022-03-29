@@ -18,17 +18,16 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! Auth::check()) {
-            return redirect('login');    
-        } else {
-            if (Auth::check() && auth()->user()->admin == 1) {
-                return $next($request);
-            } else {
-                Auth::logout();
-                return redirect('login');
-            }
-        }
+        if (! auth()->user()) {
+            return redirect()->route('login');
+        } elseif (auth()->user()->admin != 1) {
+            Auth::guard()->logout();
+            $request->session()->flush();
+            $request->session()->regenerate();
 
+            return redirect()->route('login')->withErrors('Wrong Email Or Password');;
+        }
+        return $next($request);
     }
 
 }
