@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->float('amount');
+            $table->float('paid')->default(0);
             $table->date('date_to_pay');
             $table->float('vat')->default(0);
             $table->boolean('including_vat')->default(0);

@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Payment;
 
 use App\Http\Requests\BaseFormRequest;
-use Illuminate\Validation\Rule;
+use App\Models\Transaction;
+use Illuminate\Validation\Validator;
 
 class CreatePaymentRequest extends BaseFormRequest
 {
@@ -42,9 +43,27 @@ class CreatePaymentRequest extends BaseFormRequest
     {
         return [
             'transaction_id' => 'required|exists:transactions,id',
-            'amount' => 'required|numeric',
+            'amount' => ['required', 'numeric'],
             'paid_on' => 'required|date',
             'details' => 'sometimes|string'
         ];
     }
+
+    public function withValidator(Validator $validator): void
+    {
+        $validator->after(function (Validator $validator) {
+            $value = $validator->getData()['amount'];
+            $transaction = Transaction::find($this->transaction_id);
+
+            if ($transaction) {
+                $amount = $transaction->amount;
+                $paid = $transaction->paid;   
+                
+                if (($value + $paid) > $amount) {
+                    $validator->errors()->add('amount', __('payment.paid_amount_exeeds_original_transaction_amount'));
+                }
+            }
+        });
+    }
+
 }

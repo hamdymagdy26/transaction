@@ -21,6 +21,7 @@ class TransactionResource extends AbstractJsonResource
             'id' => $this->id,
             'user' => $this->user->name,
             'amount' => $this->amount,
+            'paid' => $this->paid,
             'date_to_pay' => $this->date_to_pay,
             'status' => $this->status,
             'vat' => $this->vat,

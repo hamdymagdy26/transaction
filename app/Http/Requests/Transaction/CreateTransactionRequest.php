@@ -44,7 +44,7 @@ class CreateTransactionRequest extends BaseFormRequest
         return [
             'user_id' => 'required|exists:users,id',
             'amount' => 'required|numeric',
-            'date_to_pay' => 'required|date|after:today',
+            'date_to_pay' => 'required|date',
             'vat' => 'required|numeric',
             'including_vat' => 'required|boolean'
         ];
