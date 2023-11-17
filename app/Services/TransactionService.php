@@ -27,18 +27,20 @@ class TransactionService implements TransactionInterface
         return Transaction::create($data);
     }
 
-    public function show($id)
+    public function show($transaction)
     {
-        
+        return Transaction::findOrFail($transaction);   
     }
 
-    public function update($id, $data)
+    public function update($transaction, $data)
     {
-        
+        $information = Transaction::find($transaction);
+        $information->update($data);
+        return $information;
     }
 
-    public function destroy($id)
+    public function destroy($transaction)
     {
-        
+        Transaction::where('id', $transaction)->delete();
     }
 }
