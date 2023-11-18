@@ -1,7 +1,10 @@
 # Set Up
 - Kindly clone this repository using ssh or https.
 - Create your own .env file and insert database name.
+- Run php artisan key:gen
+- Run php artisan jwt:secret
 - Run composer install.
+- Run php artisan jwt:secret
 - Run php artisan migrate
 - Run php artisan db:seed --class=UserSeeder
 
