@@ -26,10 +26,11 @@ class CreateTransactionRequest extends BaseFormRequest
     public function messages()
     {
         return [
-            'email.required' => __('auth.email_is_mandatory'),
-            'email.email' => __('auth.email_must_be_a_valid_email'),
-            'email.exists' => __('auth.email_does_not_exist_in_our_system'),
-            'password.required'     =>  __('auth.password_is_mandatory')
+            'user_id.required' => __('transaction.user_id_is_mandatory'),
+            'user_id.exists' => __('transaction.user_id_is_invalid'),
+            'amount.required' => __('transaction.amount_is_mandatory'),
+            'date_to_pay.required' => __('transaction.payment_date_is_mandatory'),
+            'date_to_pay.date'     =>  __('transaction.date_to_pay_must_be_valid_date')
         ];
     }
 

@@ -26,10 +26,10 @@ class ReportTransactionRequest extends BaseFormRequest
     public function messages()
     {
         return [
-            'email.required' => __('auth.email_is_mandatory'),
-            'email.email' => __('auth.email_must_be_a_valid_email'),
-            'email.exists' => __('auth.email_does_not_exist_in_our_system'),
-            'password.required'     =>  __('auth.password_is_mandatory')
+            'from.date' => __('report.from_must_be_valid_date'),
+            'to.date' => __('report.to_must_be_valid_date'),
+            'to.after' => __('report.to_must_be_after_today'),
+            'month.between' => __('report.month_must_be_between_1_and_12')
         ];
     }
 

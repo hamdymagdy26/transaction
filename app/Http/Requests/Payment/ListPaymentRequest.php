@@ -17,21 +17,6 @@ class ListPaymentRequest extends BaseFormRequest
         return true;
     }
 
-    /**
-     * Get the validation messages.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            'email.required' => __('auth.email_is_mandatory'),
-            'email.email' => __('auth.email_must_be_a_valid_email'),
-            'email.exists' => __('auth.email_does_not_exist_in_our_system'),
-            'password.required'     =>  __('auth.password_is_mandatory')
-        ];
-    }
-
 
     /**
      * Get the validation rules that apply to the request.
