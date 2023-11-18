@@ -24,10 +24,10 @@ class AuthController extends BaseController
         $user = $this->authService->login($data);
 
         if (! $user) {
-            return $this->_sendResponse(false, self::STATUS_NOT_ACCEPTABLE, __('auth.invalid_username_or_password'));
+            return $this->_sendResponse(false, self::STATUS_NOT_ACCEPTABLE, __('messages.invalid_username_or_password'));
         }
 
-        return $this->_sendResponse(true, self::STATUS_OKAY, __('auth.logged_in_successfully'), ['token' => $user['token'], 'user' => new UserResource($user['user'])]);
+        return $this->_sendResponse(true, self::STATUS_OKAY, __('messages.logged_in_successfully'), ['token' => $user['token'], 'user' => new UserResource($user['user'])]);
     }
 
     public function register(RegisterRequest $request)
@@ -36,6 +36,6 @@ class AuthController extends BaseController
 
         $user = $this->authService->register($data);
 
-        return $this->_sendResponse(true, self::STATUS_OKAY, __('auth.logged_in_successfully'), ['user' => new UserResource($user)]);
+        return $this->_sendResponse(true, self::STATUS_OKAY, __('messages.logged_in_successfully'), ['user' => new UserResource($user)]);
     }
 }

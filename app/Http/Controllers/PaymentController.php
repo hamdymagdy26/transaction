@@ -21,13 +21,13 @@ class PaymentController extends BaseController
     {
         $data = $request->validated();
         $payments = $this->paymentService->index($data);
-        return $this->_sendResponse(true, self::STATUS_OKAY, __('payment.listing_all_payments'), PaymentResource::collection($payments));
+        return $this->_sendResponse(true, self::STATUS_OKAY, __('messages.records_retrieved_successfully'), PaymentResource::collection($payments));
     }
 
     public function store(CreatePaymentRequest $request)
     {
         $data = $request->validated();
         $payment = $this->paymentService->store($data);
-        return $this->_sendResponse(true, self::STATUS_OKAY, __('payment.payment_created_successfully'), new PaymentResource($payment));
+        return $this->_sendResponse(true, self::STATUS_OKAY, __('messages.record_created_successfully'), new PaymentResource($payment));
     }
 }
