@@ -9,3 +9,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('transaction', TransactionController::class);
 Route::apiResource('payment', PaymentController::class);
+Route::get('report', [TransactionController::class, 'report']);

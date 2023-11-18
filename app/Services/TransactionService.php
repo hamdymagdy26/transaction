@@ -4,11 +4,15 @@ namespace App\Services;
 
 use App\Interfaces\TransactionInterface;
 use App\Models\Transaction;
+use App\Traits\TransactionMethods;
 use App\Utility\TransactionStatus;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionService implements TransactionInterface
 {
+    use TransactionMethods;
+    
     public function index($data)
     {
         $transactions = Transaction::query();
@@ -50,26 +54,35 @@ class TransactionService implements TransactionInterface
         Transaction::where('id', $transaction)->delete();
     }
 
-    public static function status($dateToPay)
+    public function myTransactions()
     {
-        switch ($dateToPay) {
-            case $dateToPay < Carbon::today():
-                return TransactionStatus::OVERDUE;
-                break;
+        $transactions = Transaction::where('user_id', Auth::id());
 
-            case $dateToPay > Carbon::today():
-                return TransactionStatus::OUTSTANDING;
-                break;
+        if (isset($data['status'])) {
+            $transactions = $transactions->where('status', $data['status']);
         }
+
+        $this->updateStatus();
+
+        return $transactions->paginate($data['limit'] ?? 10);
     }
 
-    public static function updateStatus($id = null)
+    public function report($data)
     {
-        $transaction = Transaction::where('date_to_pay', '<', Carbon::today())->where('status', TransactionStatus::OUTSTANDING);
-        if ($id) {
-            $transaction->where('id', $id)->update(['status' => TransactionStatus::OVERDUE]);
-        } else {
-            $transaction->update(['status' => TransactionStatus::OVERDUE]);
+        $transactions = Transaction::query();
+
+        if (isset($data['month'])) {
+            $transactions = $transactions->whereMonth('created_at', $data['month']);
         }
+
+        if (isset($data['year'])) {
+            $transactions = $transactions->whereYear('created_at', $data['year']);
+        }
+
+        if (isset($data['from'])  && isset($data['to'])) {
+            $transactions = $transactions->whereBetween('created_at', [$data['from'], $data['to']]);
+        }
+
+        return $transactions->get();
     }
 }

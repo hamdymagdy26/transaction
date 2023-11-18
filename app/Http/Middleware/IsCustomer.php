@@ -17,7 +17,7 @@ class IsCustomer
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->type == Roles::CUSTOMER) {
+        if (auth()->user()->role == Roles::CUSTOMER) {
             return $next($request);
         } else {
             return response()->json(['message' => __('messages.user_does_not_have_access_to_use_this_page')], BaseApiController::STATUS_UNAUTHORIZED);

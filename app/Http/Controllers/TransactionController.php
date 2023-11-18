@@ -6,7 +6,9 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Transaction\CreateTransactionRequest;
 use App\Http\Requests\Transaction\GetTransactionRequest;
 use App\Http\Requests\Transaction\ListTransactionRequest;
+use App\Http\Requests\Transaction\ReportTransactionRequest;
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
+use App\Http\Resources\ReportResource;
 use App\Http\Resources\TransactionResource;
 use App\Services\TransactionService;
 
@@ -52,5 +54,19 @@ class TransactionController extends BaseController
         $data = $request->validated();
         $transaction = $this->transactionService->destroy($transaction);
         return $this->_sendResponse(true, self::STATUS_OKAY, __('transaction.transaction_deleted_successfully'));
+    }
+
+    public function myTransactions(ListTransactionRequest $request)
+    {
+        $data = $request->validated();
+        $transactions = $this->transactionService->myTransactions($data);
+        return $this->_sendResponse(true, self::STATUS_OKAY, __('transaction.listing_all_transactions'), TransactionResource::collection($transactions));
+    }
+
+    public function report(ReportTransactionRequest $request)
+    {
+        $data = $request->validated();
+        $transactions = $this->transactionService->report($data);
+        return $this->_sendResponse(true, self::STATUS_OKAY, __('transaction.listing_all_transactions'), ReportResource::collection($transactions));
     }
 }
