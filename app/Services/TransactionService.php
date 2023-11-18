@@ -8,6 +8,7 @@ use App\Traits\TransactionMethods;
 use App\Utility\TransactionStatus;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TransactionService implements TransactionInterface
 {
@@ -83,6 +84,17 @@ class TransactionService implements TransactionInterface
             $transactions = $transactions->whereBetween('created_at', [$data['from'], $data['to']]);
         }
 
-        return $transactions->get();
+        $transactions = $transactions->select(DB::raw('SUM(amount) as amount'), 'status')->whereIn('status', TransactionStatus::statuses())
+        ->groupBy("status");
+
+        $transactions = collect($transactions->get())->map(function ($item) use ($data) {
+            return [
+                'month' => $data['month'] ?? '',
+                'year' => $data['year'] ?? '',
+                $item['status'] => $item['amount']
+            ];
+        });
+
+        return array_reduce($transactions->toArray(), 'array_merge', array());
     }
 }
